@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UNKNOWN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7qV-GE-9AJ">
-                                <rect key="frame" x="111" y="429" width="192" height="48"/>
+                                <rect key="frame" x="111" y="161" width="192" height="48"/>
                                 <fontDescription key="fontDescription" type="system" weight="thin" pointSize="40"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -27,7 +27,8 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="7qV-GE-9AJ" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Ia1-Eb-7YC"/>
-                            <constraint firstItem="7qV-GE-9AJ" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="QSm-Pe-G3f"/>
+                            <constraint firstItem="7qV-GE-9AJ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="117" id="Jb8-pn-iOG"/>
+                            <constraint firstItem="7qV-GE-9AJ" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="dOm-2G-IgP"/>
                         </constraints>
                     </view>
                     <connections>
@@ -36,7 +37,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="139" y="80"/>
+            <point key="canvasLocation" x="137.68115942028987" y="79.6875"/>
         </scene>
     </scenes>
     <resources>
