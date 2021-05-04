@@ -10,9 +10,11 @@ import UIKit
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var distanceReading: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
     var locationManager: CLLocationManager?
     var circle: UIView!
     var firstBeaconDetected = false
+    var currentBeaconUuid: UUID?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +24,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         locationManager?.requestAlwaysAuthorization()
 
         view.backgroundColor = .lightGray
+        nameLabel.text = "Unknown"
         
         circle = UIView()
         circle.frame.size = CGSize(width: 256, height: 256)
@@ -42,47 +45,23 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func startScanning() {
-        let uuid = UUID(uuidString: "5A4BCFCE-174E-4BAC-A814-092E77F6B7E5")!
-        let beaconRegion = CLBeaconRegion(proximityUUID: uuid, major: 123, minor: 456, identifier: "MyBeacon")
-          //  locationManager?.startMonitoring(for: beaconRegion)
-          //  locationManager?.startRangingBeacons(in: beaconRegion)
-        //}
+        addBeaconRegion(uuidString: "5A4BCFCE-174E-4BAC-A814-092E77F6B7E5", major: 123, minor: 456, identifier: "Apple AirLocate")
+        addBeaconRegion(uuidString: "2F234454-CF6D-4A0F-ADF2-F4911BA9FFA6", major: 123, minor: 456, identifier: "Radius Networks")
+        addBeaconRegion(uuidString: "92AB49BE-4127-42F4-B532-90fAF1E26491", major: 123, minor: 456, identifier: "TwoCanoes")
+       }
+    
+    func addBeaconRegion(uuidString: String, major: CLBeaconMajorValue, minor: CLBeaconMinorValue, identifier: String) {
+        let uuid = UUID(uuidString: uuidString)!
+        let beaconRegion = CLBeaconRegion(proximityUUID: uuid, major: major, minor: minor, identifier: identifier)
         
-       // if self.firstBeacon  UUID(uuidString: "5A4BCFCE-174E-4BAC-A814-092E77F6B7E5")!  {
         locationManager?.startMonitoring(for: beaconRegion)
         locationManager?.startRangingBeacons(in: beaconRegion)
-       //}
-        
-        //locationManager?.startMonitoring(for: beaconRegion)
-       // locationManager?.startRangingBeacons(in: beaconRegion)
-        
-       // let uuid2 = UUID(uuidString: "74278BDA-B644-4520-8F0C-720EAF059935")!
-       // let beaconRegion2 = CLBeaconRegion(proximityUUID: uuid2, major: 65504, minor: 65505, identifier: "MyBeacon2")
-       // if beaconRegion2.uuid == UUID(uuidString: "74278BDA-B644-4520-8F0C-720EAF059935")! {
-          // locationManager?.startMonitoring(for: beaconRegion2)
-         //  locationManager?.startRangingBeacons(in: beaconRegion2)
-       //}
-        
-        //startScanning()
-       // locationManager?.startMonitoring(for: beaconRegion2)
-       // locationManager?.startRangingBeacons(in: beaconRegion2)
-
-        //let uuid3 = UUID(uuidString: "E2C56DB5-DFFB-48D2-B060-D0F5A71096E0")!
-        //let beaconRegion3 = CLBeaconRegion(proximityUUID: uuid3, major: 123, minor: 456, identifier: "MyBeacon3")
-
-        
-        //locationManager?.startMonitoring(for: beaconRegion)
-       // locationManager?.startRangingBeacons(in: beaconRegion)
-        
-        //locationManager?.startMonitoring(for: beaconRegion2)
-        //locationManager?.startRangingBeacons(in: beaconRegion2)
-        
-        //locationManager?.startMonitoring(for: beaconRegion3)
-        //locationManager?.startRangingBeacons(in: beaconRegion3)
     }
     
-    func update(distance: CLProximity) {
+    func update(distance: CLProximity, name: String) {
         UIView.animate(withDuration: 0.8) {
+            self.nameLabel.text = "\(name)"
+            
             switch distance {
             case .far:
                 self.view.backgroundColor = UIColor.blue
@@ -102,24 +81,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             default:
                 self.view.backgroundColor = UIColor.gray
                 self.distanceReading.text = "UNKNOWN"
+                self.nameLabel.text = "Unknown"
                 self.animateCircle(scale: 0.001)
             }
         }
     }
-    
-   // func updateMessage(region: CLBeaconRegion) {
-     //   UIView.animate(withDuration: 0.8) {
-       //     switch region {
-         //   case .init(uuid: UUID(uuidString: "5A4BCFCE-174E-4BAC-A814-092E77F6B7E5")!, identifier: "MyBeacon"):
-           //     self.beaconReading.text = "The beacon with the UUID of 5A4BCFCE-174E-4BAC-A814-092E77F6B7E5 has been detected!"
-            //case .init(uuid: UUID(uuidString: "5A4BCFCE-174E-4BAC-A814-092E77F6B7E5")!, identifier: "MyBeacon2"):
-                
-            //default:
-              //  self.beaconReading.text = "UNKNOWN"
-            //}
-        //}
-    //}
-    
+ 
     func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
         if let beacon = beacons.first {
             if firstBeaconDetected == false {
@@ -129,11 +96,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 self.present(alert, animated: true)
             }
             
-            update(distance: beacon.proximity)
+            if currentBeaconUuid == nil { currentBeaconUuid = region.proximityUUID }
+            guard currentBeaconUuid == region.proximityUUID else { return }
+
+            update(distance: beacon.proximity, name: region.identifier)
         }
         
         else {
-            update(distance: .unknown)
+            guard currentBeaconUuid == region.proximityUUID else { return }
+            currentBeaconUuid = nil
+            update(distance: .unknown, name: "Unknown")
         }
     }
     

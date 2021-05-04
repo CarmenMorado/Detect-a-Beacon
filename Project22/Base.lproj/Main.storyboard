@@ -22,17 +22,26 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pyJ-0g-wF2">
+                                <rect key="frame" x="143" y="719" width="128" height="68"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="27"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="pyJ-0g-wF2" secondAttribute="bottom" constant="75" id="IWF-Xf-Ga8"/>
                             <constraint firstItem="7qV-GE-9AJ" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Ia1-Eb-7YC"/>
                             <constraint firstItem="7qV-GE-9AJ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="117" id="Jb8-pn-iOG"/>
                             <constraint firstItem="7qV-GE-9AJ" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="dOm-2G-IgP"/>
+                            <constraint firstItem="pyJ-0g-wF2" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="woB-12-P2M"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="distanceReading" destination="7qV-GE-9AJ" id="neO-dt-7Xw"/>
+                        <outlet property="nameLabel" destination="pyJ-0g-wF2" id="8aZ-Fq-fB1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
