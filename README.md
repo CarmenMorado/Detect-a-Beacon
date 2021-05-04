@@ -1,4 +1,4 @@
-# Project22
+# Detect-a-Beacon
 100 Days of Swift (Project 22) "Apple introduced iBeacon technology with iOS 7, and it helped make the Internet of Things hypefest even more stratospheric." In this project, I learned to detect and range beacons, and ask the user for their location. Within the course of this project, I learned about Core Location, CLBeaconRegion, and more. In addition, I completed the following challenges: 
 
 -Write code that shows a UIAlertController when your beacon is first detected. Make sure you set a Boolean to say the alert has been shown, so it doesn’t keep appearing.
